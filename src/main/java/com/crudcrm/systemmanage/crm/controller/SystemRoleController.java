@@ -53,14 +53,14 @@ public class SystemRoleController {
     public Object delRole(@RequestBody Object roleid,HttpServletRequest request, HttpServletResponse response){
         new SystemMangeUtils().RefreshCookie(request,response);
         Boolean isok = systemRoleService.delrole(roleid,request);
-        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.error);
+        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.nopermission);
     }
 
     @PostMapping("/changerole")
     public Object changeRole(@RequestBody Map<String,Object> map,HttpServletRequest request, HttpServletResponse response){
         new SystemMangeUtils().RefreshCookie(request,response);
         Boolean isok = systemRoleService.changerole(map,request);
-        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.error);
+        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.nopermission);
     }
 
 

@@ -30,10 +30,10 @@ public interface SystemUserManageMapper extends BaseMapper<SystemUserManage> {
     @Select("select userid from crm_system_user_manage")
     List<String> selectIdList();
 
-    @Select("select * from crm_system_user_manage where userid = ${systemUserManageVoID}")
+    @Select("select * from crm_system_user_manage where userid = \"${systemUserManageVoID}\"")
     SystemUserManage selectByVoId(@Param("systemUserManageVoID") String systemUserManageVoID);
 
-    @Select("select * from crm_system_user uleft left join  crm_system_user_manage cm on uleft.userid = cm.userId left join crm_system_dept as dept on dept.deptid = cm.deptid  left join crm_system_role as role on role.roleid = cm.roleid where cm.islock = ${lock} and uleft.usermobile LIKE \"%${usermobile}%\" and uleft.username like \"%${username}%\" limit ${starts}, ${limit}")
+    @Select("select * from crm_system_user uleft left join  crm_system_user_manage cm on uleft.userid = \"cm.userId\" left join crm_system_dept as dept on dept.deptid = cm.deptid  left join crm_system_role as role on role.roleid = cm.roleid where cm.islock = ${lock} and uleft.usermobile LIKE \"%${usermobile}%\" and uleft.username like \"%${username}%\" limit ${starts}, ${limit}")
     List<SystemUserManageVo> selectListByVo(@Param("limit") Integer limit, @Param("starts") Integer starts, @Param("username") String username, @Param("usermobile") String usermobile, @Param("lock") int lock);
 
     @Select("select count(uleft.userid)  from crm_system_user uleft left join  crm_system_user_manage cm on uleft.userid = cm.userId left join crm_system_dept as dept on dept.deptid = cm.deptid  left join crm_system_role as role on role.roleid = cm.roleid where cm.islock = ${lock} and uleft.usermobile LIKE \"%${usermobile}%\" and uleft.username like \"%${username}%\"")

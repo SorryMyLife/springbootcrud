@@ -15,11 +15,21 @@ import com.crudcrm.systemmanage.crm.service.ISystemUserManageService;
 import com.crudcrm.systemmanage.crm.service.ISystemUserService;
 import com.crudcrm.systemmanage.utils.SystemMangeUtils;
 import org.apache.logging.log4j.LogManager;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -45,7 +55,38 @@ class SystemmanageApplicationTests {
 //    @Autowired
 //    ISystemUserManageService systemUserManageService;
 
-    private SystemMangeUtils systemMangeUtils = new SystemMangeUtils();
+//    private SystemMangeUtils systemMangeUtils = new SystemMangeUtils();
+
+//    @Autowired
+//    private RestHighLevelClient restHighLevelClient;
+//
+//    public static final RequestOptions COMMON_OPTIONS;
+//    static {
+//        RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
+////        builder.addHeader("Authorization", "Bearer " + TOKEN);
+////        builder.setHttpAsyncResponseConsumerFactory(
+////                new HttpAsyncResponseConsumerFactory
+////                        .HeapBufferedResponseConsumerFactory(30 * 1024 * 1024 * 1024));
+//        COMMON_OPTIONS = builder.build();
+//    }
+//
+//    @Test
+//    void ttt() throws IOException {
+//        SearchRequest searchRequest = new SearchRequest("crudcrm");
+//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//        searchSourceBuilder.query(QueryBuilders.matchQuery("usersex","1"));
+//        searchRequest.source(searchSourceBuilder);
+//        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, COMMON_OPTIONS);
+//        for (SearchHit hit : searchResponse.getHits().getHits()) {
+//            System.out.println(hit.getSourceAsString());
+//        }
+//
+//
+////        System.out.println(request);
+//
+//    }
+
+
 //    @Test
 //    void contextLoads() {
 ////        for(int i =0 ;i<100;i++){

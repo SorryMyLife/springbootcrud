@@ -96,10 +96,14 @@ public class SystemUserManageController {
     public Object changeUserPwd(@RequestBody Map<String , Object> map , HttpServletRequest request, HttpServletResponse response){
         new SystemMangeUtils().RefreshCookie(request,response);
         String userid = (String) map.get("userid");
-        String pwd = (String) map.get("pwd");
-        if((userid != null && !userid.isEmpty()) && (pwd != null && !pwd.isEmpty())){
-            Boolean isOk =  systemUserService.delUserPwdVo(userid,pwd , request);
-            return ResultMsg.add(isOk ? ResultStatus.success : ResultStatus.warning);
+        String passwd = (String) map.get("passwd");
+        String passwd2 = (String) map.get("passwd2");
+        if((userid != null && !userid.isEmpty()) && (passwd != null && !passwd.isEmpty())&& (passwd2 != null && !passwd2.isEmpty())){
+            if(passwd.equals(passwd2)){
+                Boolean isOk =  systemUserService.delUserPwdVo(userid,passwd , request);
+                return ResultMsg.add(isOk ? ResultStatus.success : ResultStatus.warning);
+            }
+            return ResultMsg.add( ResultStatus.errorLogin);
         }
         return ResultMsg.add(ResultStatus.error);
     }

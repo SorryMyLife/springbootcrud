@@ -1,6 +1,7 @@
 package com.crudcrm.systemmanage.crm.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.crudcrm.systemmanage.crm.entity.SystemDept;
 import com.crudcrm.systemmanage.crm.entity.SystemRole;
 import com.crudcrm.systemmanage.crm.entity.SystemUser;
@@ -118,25 +119,38 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         String roleid = systemUserVo.getRoleid();
         String userid = systemUserVo.getUserid();
         String deptid = systemUserVo.getDeptid();
+        String uoldid = systemUserVo.getUoldid();
+        System.out.println("122 -- SystemUserVo ::: " + systemUserVo.toString());
         SystemUserManage userManageUid = InitSystemUserManage(request);
         if(userid != null && !userid.isEmpty()){
             if (roleid != null && !roleid.isEmpty() &&
-                    deptid != null && !deptid.isEmpty()) {
+                    deptid != null && !deptid.isEmpty()&&
+                    uoldid != null && !uoldid.isEmpty()) {
                 SystemRole systemRole = systemRoleService.selectByID(roleid);
                 SystemDept systemDept = systemDeptService.selectById(deptid);
-                SystemUserManage systemUserManage = systemUserManageService.selectByIdVO(userid);
-                SystemUser systemUser = this.selectByIdVo(userid);
+                SystemUserManage systemUserManage = systemUserManageService.selectByIdVO(uoldid);
+                SystemUser systemUser = this.selectByIdVo(uoldid);
                 if (systemUserManage != null && systemRole != null && systemUser != null && systemDept != null) {
                     BeanUtils.copyProperties(systemUserVo,systemUserManage);
+                    systemUserManage.setUserid(userid);
                     systemUserManage.setEdittime(LocalDateTime.now());
                     systemUserManage.setRoleid(Integer.valueOf(roleid));
                     systemUserManage.setDeptid(deptid);
                     BeanUtils.copyProperties(systemUserVo,systemUser);
+                    systemUser.setUserid(userid);
                     if(userManageUid != null){
                         systemUserManage.setEdituser(userManageUid.getRoleid());
                     }
-                    systemUserManageService.getBaseMapper().updateById(systemUserManage);
-                    this.getBaseMapper().updateById(systemUser);
+                    System.out.println("143 -- uid and ouid ::: "+ userid + ","+uoldid);
+//                    systemUserManageService.getBaseMapper().updateById(systemUserManage);
+//                    this.getBaseMapper().updateById(systemUser);
+                    UpdateWrapper<SystemUserManage> systemUserManageUpdateWrapper = new UpdateWrapper<>();
+                    systemUserManageUpdateWrapper.eq("userid",uoldid).set("userid",systemUserManage.getUserid());
+                    UpdateWrapper<SystemUser> systemUserUpdateWrapper = new UpdateWrapper<>();
+                    systemUserUpdateWrapper.eq("userid",uoldid).set("userid",systemUser.getUserid());
+
+                    systemUserManageService.getBaseMapper().update(null,systemUserManageUpdateWrapper);
+                    this.getBaseMapper().update(null,systemUserUpdateWrapper);
                     return true;
                 }
             }

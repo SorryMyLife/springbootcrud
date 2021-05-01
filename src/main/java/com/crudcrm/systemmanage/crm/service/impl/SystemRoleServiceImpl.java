@@ -9,6 +9,7 @@ import com.crudcrm.systemmanage.crm.service.ISystemRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.crudcrm.systemmanage.crm.service.ISystemUserManageService;
 import com.crudcrm.systemmanage.utils.SystemMangeUtils;
+import com.crudcrm.systemmanage.utils.UserLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,32 +86,34 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public Boolean changerole(Map<String, Object> map, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            Integer roleid = Integer.valueOf(map.get("roleid").toString() );
-            String rolename = (String) map.get("rolename");
-            if(roleid != null && rolename != null){
-                Boolean findok = false;
-                List<SystemRole> systemRoles = this.list();
-                for (SystemRole systemRole : systemRoles) {
-                    if(systemRole.getRoleid().equals(roleid)){
-                        if(!systemRole.getUserrealname().equals(rolename)){
-                            systemRole.setUserrealname(rolename);
-                            systemRole.setEdituser(manageServiceOneUid.getUserid());
-                            systemRole.setEdittime(LocalDateTime.now());
-                            return this.updateById(systemRole);
+            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
+                Integer roleid = Integer.valueOf(map.get("roleid").toString() );
+                String rolename = (String) map.get("rolename");
+                if(roleid != null && rolename != null){
+                    Boolean findok = false;
+                    List<SystemRole> systemRoles = this.list();
+                    for (SystemRole systemRole : systemRoles) {
+                        if(systemRole.getRoleid().equals(roleid)){
+                            if(!systemRole.getUserrealname().equals(rolename)){
+                                systemRole.setUserrealname(rolename);
+                                systemRole.setEdituser(manageServiceOneUid.getUserid());
+                                systemRole.setEdittime(LocalDateTime.now());
+                                return this.updateById(systemRole);
+                            }
+                            findok =  true;
+                            break;
                         }
-                        findok =  true;
-                        break;
                     }
-                }
-                if(findok == false){
-                    SystemRole systemRole = new SystemRole();
-                    systemRole.setEdittime(LocalDateTime.now());
-                    systemRole.setAddtime(LocalDateTime.now());
-                    systemRole.setAdduser(manageServiceOneUid.getUserid());
-                    systemRole.setEdituser(manageServiceOneUid.getUserid());
-                    systemRole.setUserrealname(rolename);
-                    systemRole.setRoleid(Integer.valueOf(roleid));
-                   return this.getBaseMapper().insert(systemRole) != 0;
+                    if(findok == false){
+                        SystemRole systemRole = new SystemRole();
+                        systemRole.setEdittime(LocalDateTime.now());
+                        systemRole.setAddtime(LocalDateTime.now());
+                        systemRole.setAdduser(manageServiceOneUid.getUserid());
+                        systemRole.setEdituser(manageServiceOneUid.getUserid());
+                        systemRole.setUserrealname(rolename);
+                        systemRole.setRoleid(Integer.valueOf(roleid));
+                        return this.getBaseMapper().insert(systemRole) != 0;
+                    }
                 }
             }
         }
@@ -121,8 +124,10 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public Boolean delrole(Object roleid, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(roleid != null ){
-                return systemRoleMapper.delete(new QueryWrapper<SystemRole>().eq("roleid", roleid)) != 0;
+            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
+                if(roleid != null ){
+                    return systemRoleMapper.delete(new QueryWrapper<SystemRole>().eq("roleid", roleid)) != 0;
+                }
             }
         }
         return false;

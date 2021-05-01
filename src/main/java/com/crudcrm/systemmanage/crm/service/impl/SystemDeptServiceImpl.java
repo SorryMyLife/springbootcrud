@@ -10,6 +10,7 @@ import com.crudcrm.systemmanage.crm.service.ISystemDeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.crudcrm.systemmanage.crm.service.ISystemUserManageService;
 import com.crudcrm.systemmanage.utils.SystemMangeUtils;
+import com.crudcrm.systemmanage.utils.UserLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,32 +97,34 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     public Boolean changedept(Map<String, Object> map, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            String deptid = map.get("deptid").toString();
-            String deptname = (String) map.get("deptname");
-            if(deptid != null && deptname != null){
-                Boolean findok = false;
-                List<SystemDept> systemRoles = this.list();
-                for (SystemDept systemDept : systemRoles) {
-                    if(systemDept.getDeptid().equals(deptid)){
-                        if(!systemDept.getDeptname().equals(deptname)){
-                            systemDept.setDeptname(deptname);
-                            systemDept.setEdituser(manageServiceOneUid.getUserid());
-                            systemDept.setEdittime(LocalDateTime.now());
-                            return this.updateById(systemDept);
+            if(manageServiceOneUid.getRoleid() < UserLevel.user.getLevel()){
+                String deptid = map.get("deptid").toString();
+                String deptname = (String) map.get("deptname");
+                if(deptid != null && deptname != null){
+                    Boolean findok = false;
+                    List<SystemDept> systemRoles = this.list();
+                    for (SystemDept systemDept : systemRoles) {
+                        if(systemDept.getDeptid().equals(deptid)){
+                            if(!systemDept.getDeptname().equals(deptname)){
+                                systemDept.setDeptname(deptname);
+                                systemDept.setEdituser(manageServiceOneUid.getUserid());
+                                systemDept.setEdittime(LocalDateTime.now());
+                                return this.updateById(systemDept);
+                            }
+                            findok =  true;
+                            break;
                         }
-                        findok =  true;
-                        break;
                     }
-                }
-                if(findok == false){
-                    SystemDept systemDept = new SystemDept();
-                    systemDept.setEdittime(LocalDateTime.now());
-                    systemDept.setAddtime(LocalDateTime.now());
-                    systemDept.setAdduser(manageServiceOneUid.getUserid());
-                    systemDept.setEdituser(manageServiceOneUid.getUserid());
-                    systemDept.setDeptname(deptname);
-                    systemDept.setDeptid(deptid);
-                    return this.getBaseMapper().insert(systemDept) != 0;
+                    if(findok == false){
+                        SystemDept systemDept = new SystemDept();
+                        systemDept.setEdittime(LocalDateTime.now());
+                        systemDept.setAddtime(LocalDateTime.now());
+                        systemDept.setAdduser(manageServiceOneUid.getUserid());
+                        systemDept.setEdituser(manageServiceOneUid.getUserid());
+                        systemDept.setDeptname(deptname);
+                        systemDept.setDeptid(deptid);
+                        return this.getBaseMapper().insert(systemDept) != 0;
+                    }
                 }
             }
         }
@@ -132,8 +135,10 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     public Boolean deldept(Object deptid, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(deptid != null ){
-                return systemDeptMapper.delete(new QueryWrapper<SystemDept>().eq("deptid", deptid)) != 0;
+            if(manageServiceOneUid.getRoleid() < UserLevel.user.getLevel()){
+                if(deptid != null ){
+                    return systemDeptMapper.delete(new QueryWrapper<SystemDept>().eq("deptid", deptid)) != 0;
+                }
             }
         }
         return false;

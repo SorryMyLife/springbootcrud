@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class SystemUserManageVo extends SystemUserManage {
-    private String systemNo , deptname , useremail , usermobile , usersex , userrealname , userpassword , username;
+    private String uoldid, systemNo , deptname , useremail , usermobile , usersex , userrealname , userpassword , username;
 
 
 }

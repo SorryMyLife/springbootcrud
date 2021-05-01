@@ -11,6 +11,7 @@ import com.crudcrm.systemmanage.crm.service.ISystemUserService;
 import com.crudcrm.systemmanage.utils.ResultMsg;
 import com.crudcrm.systemmanage.utils.ResultStatus;
 import com.crudcrm.systemmanage.utils.SystemMangeUtils;
+import com.crudcrm.systemmanage.utils.UserLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -47,7 +49,7 @@ public class SystemUserController {
         String code = (String) map.get("code");
         String randomStr = (String) map.get("randomStr");
         if(code != null && username != null && password != null && randomStr != null){
-            SystemCode codeServiceOne = systemCodeService.getOne(new QueryWrapper<SystemCode>().eq("code", code).and((w)->{
+            SystemCode codeServiceOne = systemCodeService.getOne(new QueryWrapper<SystemCode>().eq("code", code.toLowerCase()).and((w)->{
                 w.eq("cid",randomStr);
             }));
             if(codeServiceOne != null){
@@ -57,8 +59,11 @@ public class SystemUserController {
                 if(userServiceOne != null){
                     SystemUserManage userManageServiceOne = systemUserManageService.getOne(new QueryWrapper<SystemUserManage>().eq("userid", userServiceOne.getUserid()));
                     if(userManageServiceOne != null){
-                        if(userManageServiceOne.getRoleid() < 3){
+                        if(userManageServiceOne.getRoleid() < UserLevel.user.getLevel()){
                             new SystemMangeUtils().RefreshCookie(userServiceOne,response);
+                            if(systemCodeService.count() > 20){
+                                systemCodeService.truncate();
+                            }
                             return ResultMsg.add(ResultStatus.success);
                         }
                     }
@@ -102,12 +107,12 @@ public class SystemUserController {
                 SystemCode codeServiceOne = systemCodeService.getOne(new QueryWrapper<SystemCode>().eq("cid", cid));
                 if(codeServiceOne != null){
                     codeServiceOne.setCid(cid);
-                    codeServiceOne.setCode(code[0]);
+                    codeServiceOne.setCode(code[0].toLowerCase());
                     systemCodeService.updateById(codeServiceOne);
                 }else{
                     SystemCode systemCode = new SystemCode();
                     systemCode.setCid(cid);
-                    systemCode.setCode(code[0]);
+                    systemCode.setCode(code[0].toLowerCase());
                     systemCodeService.save(systemCode);
                 }
                 return ResultMsg.add(ResultStatus.success).add("data",code[1]);

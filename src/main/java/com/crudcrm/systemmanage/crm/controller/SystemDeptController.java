@@ -46,14 +46,14 @@ public class SystemDeptController {
     public Object delDept(@RequestBody Object deptid, HttpServletRequest request, HttpServletResponse response){
         new SystemMangeUtils().RefreshCookie(request,response);
         Boolean isok = systemDeptService.deldept(deptid,request);
-        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.error);
+        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.nopermission);
     }
 
     @PostMapping("/changedept")
     public Object changeDept(@RequestBody Map<String,Object> map, HttpServletRequest request, HttpServletResponse response){
         new SystemMangeUtils().RefreshCookie(request,response);
         Boolean isok = systemDeptService.changedept(map,request);
-        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.error);
+        return  ResultMsg.add(isok ? ResultStatus.success: ResultStatus.nopermission);
     }
 
     @GetMapping("/getdepts")

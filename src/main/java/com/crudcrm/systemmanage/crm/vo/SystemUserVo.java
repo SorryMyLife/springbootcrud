@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 public class SystemUserVo extends SystemUser {
 
-    private String roleid,token,deptid;
+    private String uoldid, roleid,token,deptid;
 
 }

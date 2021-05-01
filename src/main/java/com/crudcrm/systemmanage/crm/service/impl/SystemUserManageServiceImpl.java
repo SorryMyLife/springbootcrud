@@ -190,6 +190,7 @@ public class SystemUserManageServiceImpl extends ServiceImpl<SystemUserManageMap
         BeanUtils.copyProperties(systemRole,userManageVo);
         BeanUtils.copyProperties(systemUserManage, userManageVo);
         userManageVo.setUsersex(systemUser.getUsersex()==0?"女":"男");
+        userManageVo.setUoldid(userManageVo.getUserid());
         return userManageVo;
     }
 

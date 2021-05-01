@@ -16,10 +16,10 @@ import org.apache.ibatis.annotations.Update;
  */
 public interface SystemUserMapper extends BaseMapper<SystemUser> {
 
-    @Select("select * from crm_system_user where userId = ${systemUserVoId}")
+    @Select("select * from crm_system_user where userId = \"${systemUserVoId}\"")
     SystemUser selectByIdVo(@Param("systemUserVoId") String systemUserVoId);
 
-    @Update("update crm_system_user set userpassword = ${pwd} WHERE userid = ${userid}")
+    @Update("update crm_system_user set userpassword = ${pwd} WHERE userid = \"${userid}\"")
     Boolean resetPwd(String userid, String pwd);
 
 }
