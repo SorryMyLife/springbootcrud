@@ -122,10 +122,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
         String uoldid = systemUserVo.getUoldid();
         System.out.println("122 -- SystemUserVo ::: " + systemUserVo.toString());
         SystemUserManage userManageUid = InitSystemUserManage(request);
-        if(userid != null && !userid.isEmpty()){
+        if(userid != null && !userid.isEmpty()&& uoldid != null && !uoldid.isEmpty()){
             if (roleid != null && !roleid.isEmpty() &&
-                    deptid != null && !deptid.isEmpty()&&
-                    uoldid != null && !uoldid.isEmpty()) {
+                    deptid != null && !deptid.isEmpty() && !uoldid.isEmpty()) {
                 SystemRole systemRole = systemRoleService.selectByID(roleid);
                 SystemDept systemDept = systemDeptService.selectById(deptid);
                 SystemUserManage systemUserManage = systemUserManageService.selectByIdVO(uoldid);
@@ -145,7 +144,16 @@ public class SystemUserServiceImpl extends ServiceImpl<SystemUserMapper, SystemU
 //                    systemUserManageService.getBaseMapper().updateById(systemUserManage);
 //                    this.getBaseMapper().updateById(systemUser);
                     UpdateWrapper<SystemUserManage> systemUserManageUpdateWrapper = new UpdateWrapper<>();
-                    systemUserManageUpdateWrapper.eq("userid",uoldid).set("userid",systemUserManage.getUserid());
+                    systemUserManageUpdateWrapper
+                            .eq("userid",uoldid)
+                            .set("userid",systemUserManage.getUserid())
+                            .set("roleid",systemUserManage.getRoleid())
+                            .set("deptid",systemUserManage.getDeptid())
+                            .set("islock",systemUserManage.getIslock())
+                            .set("isonline",systemUserManage.getIsonline())
+                            .set("edittime",systemUserManage.getEdittime())
+                            .set("adduser",systemUserManage.getAdduser())
+                            .set("edituser",systemUserManage.getEdituser());
                     UpdateWrapper<SystemUser> systemUserUpdateWrapper = new UpdateWrapper<>();
                     systemUserUpdateWrapper.eq("userid",uoldid).set("userid",systemUser.getUserid());
 

@@ -189,6 +189,14 @@
         :model="editForm"
         :rules="rules"
       >
+      <el-form-item label="用户ID" prop="userid">
+          <el-input
+            size="small"
+            v-model="editForm.userid"
+            auto-complete="off"
+            placeholder="请输入用户ID"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="用户名" prop="username">
           <el-input
             size="small"
@@ -265,6 +273,51 @@
         >
       </div>
     </el-dialog>
+
+    <!-- 密码修改界面 -->
+    <el-dialog
+      :title="title"
+      :visible.sync="editPasswdFormVisible"
+      width="30%"
+      @click="closeDialog('resetpwd')"
+    >
+      <el-form
+        label-width="80px"
+        ref="editPasswdForm"
+        :model="editForm"
+        :rules="rules"
+      >
+        <el-form-item label="用户密码" prop="passwd">
+          <el-input
+            size="small"
+            v-model="editPasswdForm.passwd"
+            auto-complete="off"
+            placeholder="请输入用户密码"
+          ></el-input>
+        </el-form-item>
+        
+        <el-form-item label="确认用户密码" prop="passwd2">
+          <el-input
+            size="small"
+            v-model="editPasswdForm.passwd2"
+            placeholder="请确认用户密码"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button size="small" @click="closeDialog('resetpwd')">取消</el-button>
+        <el-button
+          size="small"
+          type="primary"
+          :loading="loading"
+          class="title"
+          @click="subresetpwd('editPasswdForm')"
+          >确认修改</el-button
+        >
+      </div>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -287,6 +340,7 @@ export default {
       editFormVisible: false, //控制编辑页面显示与隐藏
       dataAccessshow: false, //控制数据权限显示与隐藏
       unitAccessshow: false, //控制所属单位隐藏与显示
+      editPasswdFormVisible: false,
       // 编辑与添加
       editForm: {
         userid: "",
@@ -296,8 +350,16 @@ export default {
         usermobile: "",
         useremail: "",
         usersex: "",
+        uoldid: "",
         token: localStorage.getItem("logintoken"),
       },
+
+      editPasswdForm: {
+        userid: "",
+        passwd: "",
+        passwd2: ""
+      },
+
       // 部门参数
       unitparm: {
         userIds: "",
@@ -310,6 +372,9 @@ export default {
       rules: {
         userName: [
           { required: true, message: "请输入用户名", trigger: "blur" },
+        ],
+        userId: [
+          { required: true, message: "请输入用户ID", trigger: "blur" },
         ],
         userRealName: [
           { required: true, message: "请输入姓名", trigger: "blur" },
@@ -488,8 +553,7 @@ export default {
           this.loading = false;
           // console.log("data.data  ::: ", data.data);
           this.userData = data.data;
-
-          // console.log("userdata ::: " ,this.userData);
+          console.log("userdata ::: " ,this.userData);
           // 分页赋值
           this.pageparm.currentPage = this.formInline.page;
           this.pageparm.pageSize = this.formInline.limit;
@@ -560,7 +624,7 @@ export default {
       }
       //this.$forceUpdate()
       console.log("roles ::: ", this.roles);
-      // console.log("index ::: ",index , " -- row ::: ",row);
+      console.log("index ::: ",index , " -- row ::: ",row);
 
       this.editFormVisible = true;
       if (row != undefined && row != "undefined") {
@@ -572,6 +636,7 @@ export default {
         this.editForm.usermobile = row.usermobile;
         this.editForm.useremail = row.useremail;
         this.editForm.usersex = row.usersex;
+        this.editForm.uoldid = row.uoldid;
       } else {
         this.title = "添加用户";
         this.editForm.userid = "";
@@ -628,6 +693,8 @@ export default {
         this.dataAccessshow = false;
       } else if (dialog == "unit") {
         this.unitAccessshow = false;
+      }else if(dialog == "resetpwd"){
+        this.editPasswdFormVisible = false;
       }
     },
     // 删除用户
@@ -670,44 +737,43 @@ export default {
           });
         });
     },
-    // 重置密码
-    resetpwd(index, row) {
-      var parm = {
-        userid: row.userid,
-      };
-      parm = JSON.stringify(parm);
-      this.$confirm("确定要重置密码吗?", "信息", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          httppost("/aa/crm/system-user-manage/deluserpwd", parm)
-            .then((res) => {
-              if (res.code == 0) {
-                this.$message({
-                  type: "success",
-                  message: "重置密码成功！",
-                });
-                this.getdata(this.formInline);
-              } else {
-                this.$message({
-                  type: "info",
-                  message: res.msg,
-                });
-              }
-            })
-            .catch((err) => {
-              this.loading = false;
-              this.$message.error("重置密码失败，请稍后再试！");
-            });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "取消重置密码！",
+
+    subresetpwd(editPasswdForm) {
+      this.$refs[editPasswdForm].validate((valid) => {
+        if (valid) {
+          // 请求方法
+          console.log("this.editPasswdForm 1::: ", this.editPasswdForm);
+          const bbbb = JSON.stringify(this.editPasswdForm);
+          console.log("bbbb::: ", bbbb);
+          httppost("aa/crm/system-user-manage/changeuserpwd", bbbb).then((r) => {
+            this.editPasswdFormVisible = false;
+            this.loading = false;
+            console.log("r ::: ", r);
+            if (r.code == 0) {
+              this.getdata(this.formInline);
+              this.$message({
+                type: "success",
+                message: "用户密码修改成功！",
+              });
+            } else {
+              this.$message({
+                type: "info",
+                message: r.msg,
+              });
+            }
           });
-        });
+        } else {
+          return false;
+        }
+      });
+    },
+
+    // 重置密码
+    resetpwd: async function (index, row) {
+      this.editPasswdFormVisible = true;
+      this.editPasswdForm.userid = row.userid;
+      this.editPasswdForm.passwd = "";
+      this.editPasswdForm.passwd2 = "";
     },
     // 下线用户
     offlineUser(index, row) {

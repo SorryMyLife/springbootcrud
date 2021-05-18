@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : test
+ Source Server         : 本地3307
  Source Server Type    : MySQL
- Source Server Version : 50731
- Source Host           : 192.168.198.130:3306
+ Source Server Version : 80017
+ Source Host           : localhost:3307
  Source Schema         : crudcrm
 
  Target Server Type    : MySQL
- Target Server Version : 50731
+ Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 14/01/2021 11:09:41
+ Date: 18/05/2021 17:04:14
 */
 
 SET NAMES utf8mb4;
@@ -26,24 +26,22 @@ CREATE TABLE `crm_system_code`  (
   `code` varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`, `cid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of crm_system_code
 -- ----------------------------
-INSERT INTO `crm_system_code` VALUES ('9C0HGDQ20DNE2M1LQ4UP9ONM5H', 'wP61Tv', 1);
-INSERT INTO `crm_system_code` VALUES ('6570HV5417LHCHLHU6FQOBGS1M', '1EHdja', 2);
-INSERT INTO `crm_system_code` VALUES ('R5ABVOTLG6EDK7H7RS189A2FGT', 'RUrgwD', 3);
-INSERT INTO `crm_system_code` VALUES ('55SAULG4N0R85GG4NOC703MLB5', '6uHu5K', 4);
-INSERT INTO `crm_system_code` VALUES ('PT8DGKHGCTSG0RFHT49GV9ATE6', '2TmZkW', 5);
-INSERT INTO `crm_system_code` VALUES ('E7MT4BIPGUPM96LPD10OOF6QFS', 'h28If3', 6);
-INSERT INTO `crm_system_code` VALUES ('N5S89UURMSQ8FGN0VSSK2BKM1R', 'Fbk5uj', 7);
-INSERT INTO `crm_system_code` VALUES ('8MU2DF09FNM8AOLR3IBS44PL90', 'RRLpHz', 8);
-INSERT INTO `crm_system_code` VALUES ('8L71HIL61IKGVIU7G9IUMG64AK', 'FiPyt4', 9);
-INSERT INTO `crm_system_code` VALUES ('LL7PH1C0LBQM421TC7NAVAUP30', 'FLqUoi', 10);
-INSERT INTO `crm_system_code` VALUES ('O3K1GS6GS5BPC1TOF3KO0VI9I7', 'FiUTmu', 11);
-INSERT INTO `crm_system_code` VALUES ('9OEOM4I4U2TO51SV1FQ4M2GTTT', 'jb49Fm', 12);
-INSERT INTO `crm_system_code` VALUES ('O0T0MMM2IU56E80G1RNOHLQOOM', 'b6N8UY', 13);
+INSERT INTO `crm_system_code` VALUES ('O8TGSDCKG3HSNGEQ8KT53ASELS', 'y0hozg', 1);
+INSERT INTO `crm_system_code` VALUES ('241A6Q90O91IK03C1M4H8VVN1V', 'wrhjmk', 2);
+INSERT INTO `crm_system_code` VALUES ('8QECSPKIAHB3S8HV54NSP5OS68', 'g81khz', 3);
+INSERT INTO `crm_system_code` VALUES ('U5F7U72SNUNOETBP5CS3OHTAQ6', '3esw9z', 4);
+INSERT INTO `crm_system_code` VALUES ('ERRTDID6LHU2CFSVN68HE1DACC', 'byhpvy', 5);
+INSERT INTO `crm_system_code` VALUES ('25795EL0UEM8E7KAEAFFES8QQT', 'vt5ddr', 6);
+INSERT INTO `crm_system_code` VALUES ('GBULMM5PUDDSIP7P30A16B6SI3', 'nzsnzx', 7);
+INSERT INTO `crm_system_code` VALUES ('IGE00ICRAE0UHV0UR7P04CDIN3', 'pqfee3', 8);
+INSERT INTO `crm_system_code` VALUES ('IAMGIHTPU0MSRBAMK3IAL77S5Q', 'kt3mqq', 9);
+INSERT INTO `crm_system_code` VALUES ('2D8SNM0FIPDB8E8EIAG3D0KEOT', 'o5ioo5', 10);
+INSERT INTO `crm_system_code` VALUES ('99DE9IRBO1EK8EC277BKA8KOL4', 'bwelle', 11);
 
 -- ----------------------------
 -- Table structure for crm_system_dept
@@ -64,7 +62,9 @@ CREATE TABLE `crm_system_dept`  (
 -- ----------------------------
 INSERT INTO `crm_system_dept` VALUES ('00067586794504715361159', '老王科技股份制有限公司9', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
 INSERT INTO `crm_system_dept` VALUES ('24195564321192112762227', '老王科技股份制有限公司4', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
+INSERT INTO `crm_system_dept` VALUES ('253JLKASDFU', '哈哈哈哈', '2021-05-18 16:40:42', 'admin', '2021-05-18 16:40:42', 'admin');
 INSERT INTO `crm_system_dept` VALUES ('33097264112709389656028', '老王科技股份制有限公司6', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
+INSERT INTO `crm_system_dept` VALUES ('3hGHSH46', '氨基酸法律框架', '2021-05-18 16:41:08', 'admin', '2021-05-18 16:41:08', 'admin');
 INSERT INTO `crm_system_dept` VALUES ('5555', '尔特人', '2021-01-13 17:29:31', 'root', '2021-01-13 17:29:31', 'root');
 INSERT INTO `crm_system_dept` VALUES ('59240944596217419902944', '老王科技股份制有限公司7', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
 INSERT INTO `crm_system_dept` VALUES ('65124792721988915880543', '老王科技股份制有限公司5', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
@@ -73,6 +73,7 @@ INSERT INTO `crm_system_dept` VALUES ('77316571534680356487415', '老王科技�
 INSERT INTO `crm_system_dept` VALUES ('85255945061340863470764', '老王科技股份制有限公司0', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
 INSERT INTO `crm_system_dept` VALUES ('86711656808397763331740', '老王科技股份制有限公司8', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
 INSERT INTO `crm_system_dept` VALUES ('90309212233944331442444', '老王科技股份制有限公司1', '2021-01-13 16:26:08', 'root', '2021-01-13 16:26:08', 'root');
+INSERT INTO `crm_system_dept` VALUES ('admin', 'admin', '2021-04-14 16:37:54', 'root', '2021-04-14 16:37:54', 'root');
 
 -- ----------------------------
 -- Table structure for crm_system_role
@@ -113,17 +114,19 @@ CREATE TABLE `crm_system_user`  (
 -- ----------------------------
 -- Records of crm_system_user
 -- ----------------------------
-INSERT INTO `crm_system_user` VALUES ('20210113162607896', '老王-0号', 0, '227089@qq.com', '03545341590', '4968226956397666');
-INSERT INTO `crm_system_user` VALUES ('20210113162608135', '老王-1号', 1, '06844@qq.com', '17807464523', '6405566738810027');
 INSERT INTO `crm_system_user` VALUES ('20210113162608150', '老王-2号', 1, '1830112@qq.com', '55959120762', '6524878019074997');
 INSERT INTO `crm_system_user` VALUES ('20210113162608165', '老王-3号', 1, '9337901642@qq.com', '01296551108', '1409467815272206');
 INSERT INTO `crm_system_user` VALUES ('20210113162608184', '老王-4号', 1, '00989468@qq.com', '16320354962', '5271313607493390');
 INSERT INTO `crm_system_user` VALUES ('20210113162608199', '老王-5号', 1, '9688125654@qq.com', '04465008908', '9504622582779644');
 INSERT INTO `crm_system_user` VALUES ('20210113162608214', '老王-6号', 1, '57301334@qq.com', '01344525601', '4759722595251965');
 INSERT INTO `crm_system_user` VALUES ('20210113162608228', '老王-7号', 1, '7469973550@qq.com', '58334109586', '6318114001761226');
-INSERT INTO `crm_system_user` VALUES ('20210113162608245', '老王-8号', 1, '6071263@qq.com', '34345105177', '7001962127298452');
 INSERT INTO `crm_system_user` VALUES ('20210113162608260', '老王-9号', 1, '82556@qq.com', '96346807363', '3624798613384609');
+INSERT INTO `crm_system_user` VALUES ('admin', 'admin', 1, '234234234', '12312312332', 'admin');
+INSERT INTO `crm_system_user` VALUES ('admin2', '老王-8号', 1, '6071263@qq.com', '34345105177', '123');
+INSERT INTO `crm_system_user` VALUES ('lw0h', '老王-0号', 0, '227089@qq.com', '03545341590', 'lw0h');
+INSERT INTO `crm_system_user` VALUES ('lw1h', '老王-1号', 1, '06844@qq.com', '17807464523', '123');
 INSERT INTO `crm_system_user` VALUES ('root', 'root', 1, '4234234', '234234234243', 'root');
+INSERT INTO `crm_system_user` VALUES ('user2', '用户2', 1, '3454353@Qqj.com', '234234234', '123');
 
 -- ----------------------------
 -- Table structure for crm_system_user_manage
@@ -144,16 +147,18 @@ CREATE TABLE `crm_system_user_manage`  (
 -- ----------------------------
 -- Records of crm_system_user_manage
 -- ----------------------------
-INSERT INTO `crm_system_user_manage` VALUES ('20210113162607896', 2, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '33097264112709389656028', 2, 0);
-INSERT INTO `crm_system_user_manage` VALUES ('20210113162608135', 1, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '0', '86711656808397763331740', 3, 0);
+INSERT INTO `crm_system_user_manage` VALUES ('lw0h', 2, 2, '2021-01-13 16:26:17', '2021-05-18 16:46:49', '0', '5555', 4, 1);
+INSERT INTO `crm_system_user_manage` VALUES ('lw1h', 1, 2, '2021-01-13 16:26:17', '2021-05-18 16:48:11', '0', '86711656808397763331740', 3, 1);
 INSERT INTO `crm_system_user_manage` VALUES ('20210113162608150', 3, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '59240944596217419902944', 3, 0);
-INSERT INTO `crm_system_user_manage` VALUES ('20210113162608165', 3, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '66445826798969330291572', 4, 0);
+INSERT INTO `crm_system_user_manage` VALUES ('20210113162608165', 3, 3, '2021-01-13 16:26:17', '2021-04-15 11:10:58', '0', '66445826798969330291572', 4, 1);
 INSERT INTO `crm_system_user_manage` VALUES ('20210113162608184', 0, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '66445826798969330291572', 1, 0);
 INSERT INTO `crm_system_user_manage` VALUES ('20210113162608199', 2, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '24195564321192112762227', 3, 0);
-INSERT INTO `crm_system_user_manage` VALUES ('20210113162608214', 3, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '0', '85255945061340863470764', 4, 0);
+INSERT INTO `crm_system_user_manage` VALUES ('20210113162608214', 3, 3, '2021-01-13 16:26:17', '2021-04-15 14:16:47', '0', '85255945061340863470764', 4, 0);
 INSERT INTO `crm_system_user_manage` VALUES ('20210113162608228', 1, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '33097264112709389656028', 4, 0);
-INSERT INTO `crm_system_user_manage` VALUES ('20210113162608245', 3, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '1', '59240944596217419902944', 2, 0);
+INSERT INTO `crm_system_user_manage` VALUES ('admin2', 3, 2, '2021-01-13 16:26:17', '2021-05-18 16:57:08', '1', '59240944596217419902944', 2, 0);
 INSERT INTO `crm_system_user_manage` VALUES ('20210113162608260', 1, 0, '2021-01-13 16:26:17', '2021-01-13 16:26:17', '0', '24195564321192112762227', 0, 0);
 INSERT INTO `crm_system_user_manage` VALUES ('root', 0, 0, '2021-01-13 16:43:31', '2021-01-13 17:21:22', '0', '00067586794504715361159', 0, 1);
+INSERT INTO `crm_system_user_manage` VALUES ('admin', 0, 1, '2021-04-14 16:38:13', '2021-05-18 16:44:10', '0', 'admin', 1, 0);
+INSERT INTO `crm_system_user_manage` VALUES ('user2', 2, 2, '2021-05-18 16:44:53', '2021-05-18 16:57:22', '0', '3hGHSH46', 4, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

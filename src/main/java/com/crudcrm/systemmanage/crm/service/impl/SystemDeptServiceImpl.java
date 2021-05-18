@@ -97,7 +97,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     public Boolean changedept(Map<String, Object> map, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(manageServiceOneUid.getRoleid() < UserLevel.user.getLevel()){
+            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
                 String deptid = map.get("deptid").toString();
                 String deptname = (String) map.get("deptname");
                 if(deptid != null && deptname != null){
@@ -135,7 +135,7 @@ public class SystemDeptServiceImpl extends ServiceImpl<SystemDeptMapper, SystemD
     public Boolean deldept(Object deptid, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(manageServiceOneUid.getRoleid() < UserLevel.user.getLevel()){
+            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
                 if(deptid != null ){
                     return systemDeptMapper.delete(new QueryWrapper<SystemDept>().eq("deptid", deptid)) != 0;
                 }

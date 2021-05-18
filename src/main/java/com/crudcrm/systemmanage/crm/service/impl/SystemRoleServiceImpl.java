@@ -86,7 +86,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public Boolean changerole(Map<String, Object> map, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
+            if(manageServiceOneUid.getRoleid() < UserLevel.root.getLevel()){
                 Integer roleid = Integer.valueOf(map.get("roleid").toString() );
                 String rolename = (String) map.get("rolename");
                 if(roleid != null && rolename != null){
@@ -124,7 +124,7 @@ public class SystemRoleServiceImpl extends ServiceImpl<SystemRoleMapper, SystemR
     public Boolean delrole(Object roleid, HttpServletRequest request) {
         SystemUserManage manageServiceOneUid = InitSystemUserManage(request);
         if(manageServiceOneUid != null){
-            if(manageServiceOneUid.getRoleid() < UserLevel.admin1.getLevel()){
+            if(manageServiceOneUid.getRoleid() < UserLevel.root.getLevel()){
                 if(roleid != null ){
                     return systemRoleMapper.delete(new QueryWrapper<SystemRole>().eq("roleid", roleid)) != 0;
                 }
